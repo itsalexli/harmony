@@ -1,10 +1,21 @@
 export default function HighlightError({ measureList }) {
-  measureList.forEach((measure) => {
-    measure.noteList.forEach((note) => {
-      if (note.step === "C") {
-        console.log("Found a C note!");
+  const handleHighlight = () => {
+    const highlightedNotes = document.querySelectorAll(".abcjs-note");
+    let highlightNoteIndex = 0;
+    for (let i = 0; i < measureList.length; i++) {
+      for (let j = 0; j < measureList[i].noteList.length; j++) {
+        if (measureList[i].noteList[j].step === "E") {
+          let currNote = highlightedNotes[highlightNoteIndex];
+          currNote.setAttribute("fill", "red");
+        }
+        highlightNoteIndex++;
       }
-    });
-  });
-  console.log(measureList);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={handleHighlight}>Highlight Errors</button>
+    </div>
+  );
 }

@@ -10,6 +10,8 @@ export default function Sheet({ measureList }) {
       abcjs.renderAbc(notationRef.current, abcNotation, {
         scale: 1.6,
         add_classes: true,
+        clickListener: function () {},
+        selectionColor: "#111199",
       });
     }
   }, [measureList]);
@@ -53,5 +55,5 @@ export default function Sheet({ measureList }) {
     return abcString;
   };
 
-  return <div ref={notationRef} className="w-4/5 bg-blue-400" />;
+  return <div ref={notationRef} className="w-4/5 bg-blue-50" />;
 }

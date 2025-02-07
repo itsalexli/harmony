@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.myRedNote path {
-  fill: red !important; /* Change the notehead color */
-  stroke: red !important; /* Change the note outline */
+.abcjs-note.abcjs-clicked {
+  fill: inherit !important;
+  stroke: inherit !important;
 }
