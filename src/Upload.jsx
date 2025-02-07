@@ -38,7 +38,13 @@ export default function Upload({ setMeasureList }) {
                   note.getElementsByTagName("duration")[0].textContent;
                 const type = note.getElementsByTagName("type")[0].textContent;
 
-                noteObjList.push({ step, octave, duration, type });
+                noteObjList.push({
+                  step,
+                  octave,
+                  duration,
+                  type,
+                  error: false,
+                });
               } else if (rest) {
                 const duration =
                   note.getElementsByTagName("duration")[0].textContent;

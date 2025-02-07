@@ -7,16 +7,29 @@ export default function Sheet({ measureList }) {
   useEffect(() => {
     if (notationRef.current && measureList.length > 0) {
       const abcNotation = generateABCNotation(measureList);
-      abcjs.renderAbc(notationRef.current, abcNotation, { scale: 1.6 });
+      abcjs.renderAbc(notationRef.current, abcNotation, {
+        scale: 1.6,
+        add_classes: true,
+      });
     }
   }, [measureList]);
 
+  const octaveToABC = {
+    1: ",,,",
+    2: ",,",
+    3: ",",
+    4: "",
+    5: "'",
+    6: "''",
+    7: "'''",
+  };
+
   const typetoLength = {
     whole: 4,
-    half: 4,
-    quarter: 4,
-    eighth: 4,
-    "16th": 4,
+    half: 2,
+    quarter: 1,
+    eighth: "/",
+    "16th": "//",
   };
 
   const generateABCNotation = (measures) => {
@@ -28,7 +41,9 @@ export default function Sheet({ measureList }) {
         if (note.rest) {
           measureString += "z ";
         } else {
-          measureString += `${note.step}${note.typetoLength[note.type]} `;
+          measureString += `${note.step}${octaveToABC[note.octave]}${
+            typetoLength[note.type]
+          } `;
         }
       });
       abcString += measureString.trim() + " | ";
