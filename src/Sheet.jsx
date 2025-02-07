@@ -1,0 +1,42 @@
+import React, { useEffect, useRef } from "react";
+import abcjs from "abcjs";
+
+export default function Sheet({ measureList }) {
+  const notationRef = useRef(null);
+
+  useEffect(() => {
+    if (notationRef.current && measureList.length > 0) {
+      const abcNotation = generateABCNotation(measureList);
+      abcjs.renderAbc(notationRef.current, abcNotation, { scale: 1.6 });
+    }
+  }, [measureList]);
+
+  const typetoLength = {
+    whole: 4,
+    half: 4,
+    quarter: 4,
+    eighth: 4,
+    "16th": 4,
+  };
+
+  const generateABCNotation = (measures) => {
+    let abcString = "X: 1\nT: Dynamic Music\nM: 4/4\nL: 1/4\nK: Cmaj\n";
+
+    measures.forEach((measure) => {
+      let measureString = "";
+      measure.noteList.forEach((note) => {
+        if (note.rest) {
+          measureString += "z ";
+        } else {
+          measureString += `${note.step}${note.typetoLength[note.type]} `;
+        }
+      });
+      abcString += measureString.trim() + " | ";
+    });
+    console.log(measureList);
+    console.log(abcString);
+    return abcString;
+  };
+
+  return <div ref={notationRef} className="w-4/5 bg-blue-400" />;
+}
