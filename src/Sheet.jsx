@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import abcjs from "abcjs";
 
+let currentABCString = "";
+
 export default function Sheet({ measureList }) {
   const notationRef = useRef(null);
 
@@ -108,8 +110,23 @@ export default function Sheet({ measureList }) {
 
     console.log("Generated ABC Notation:\n", abcString);
     console.log(abcString);
+    currentABCString = abcString;
     return abcString;
   };
+
+  function handleNoteClick(analysis) {
+    // console.log("Clicked Note Info:", {
+    //   analysis: analysis,
+    // });
+
+    // console.log("StartChar" + analysis.startChar);
+    // console.log("EndChar" + analysis.endChar);
+
+    console.log(
+      "Current step: " +
+        currentABCString.substring(analysis.startChar, analysis.endChar)
+    );
+  }
 
   useEffect(() => {
     if (notationRef.current && measureList.length > 0) {
@@ -118,7 +135,7 @@ export default function Sheet({ measureList }) {
       abcjs.renderAbc(notationRef.current, abcNotation, {
         scale: 1.6,
         add_classes: true,
-        clickListener: function () {},
+        clickListener: handleNoteClick,
         selectionColor: "#111199",
       });
     }
