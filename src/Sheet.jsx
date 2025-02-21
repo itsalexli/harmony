@@ -114,10 +114,24 @@ export default function Sheet({ measureList }) {
     return abcString;
   };
 
+  function findMeasure(startChar) {
+    const target = "]";
+    let currentPointer = startChar;
+    let measureCount = 0;
+    while (currentABCString[currentPointer] != target) {
+      if (currentABCString[currentPointer] == "|") {
+        measureCount++;
+      }
+      currentPointer--;
+    }
+
+    return measureCount + 1;
+  }
+
   function handleNoteClick(analysis) {
-    // console.log("Clicked Note Info:", {
-    //   analysis: analysis,
-    // });
+    console.log("Clicked Note Info:", {
+      analysis: analysis,
+    });
 
     // console.log("StartChar" + analysis.startChar);
     // console.log("EndChar" + analysis.endChar);
@@ -126,6 +140,7 @@ export default function Sheet({ measureList }) {
       "Current step: " +
         currentABCString.substring(analysis.startChar, analysis.endChar)
     );
+    console.log("Measure: " + findMeasure(analysis.startChar));
   }
 
   useEffect(() => {
